@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const url = "http://localhost:3000/films/1"
-    // const filmsDiv = () => document.querySelector("#films")
-    // const posterDiv = () => document.querySelector("#poster")
-    // const showingDiv = () => document.querySelector("#showing")
     fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -37,9 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         buyBtn.innerText = 'SOLD OUT'
                     }
                 })
-            }
-        })
-    })
+            } //event listener
+        }) //data 
+    }) //first
 
-/////////
+// ##############################______________############################### //
+console.log('works?')
 })
