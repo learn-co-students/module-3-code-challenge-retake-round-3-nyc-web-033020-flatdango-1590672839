@@ -17,6 +17,9 @@ const button = document.getElementsByClassName('ui orange button')[0]
 const card = document.getElementsByClassName('card')[0]
 const div = document.createElement('div')
 
+const filmItem = document.getElementsByClassName('film item')[0]
+
+
 card.append(div)
 
     firstMovie()
@@ -72,10 +75,6 @@ card.append(div)
                let  x = y 
 
                ticketNum.innerHTML = `0 no more tickets` 
-
-               
-
-
                     fetch(`http://localhost:3000/films/1`, {
                     method: "PATCH",
                     headers:   {
@@ -83,36 +82,31 @@ card.append(div)
                         'accept': 'application/json'
                       },
                       body: JSON.stringify({ tickets_sold: x }) 
+                     })
+                   }
+                })                      
+               }  
+     })
 
-                })
+       allMovies()
 
-            }
-      
+               function allMovies(){
+                   fetch('http://localhost:3000/films')
+                   .then(r => r.json())
+                   .then(movies => getMovies(movies))
+               }
 
+               function getMovies(movies){
 
-
-           })
-
-          
-
-
-                 
-                 
-
-
-
-
-             
-        
-             
-              
-}
-          
-
-         
-        
-    })
-
+                    movies.forEach(movie=> {
+                        const li = document.createElement('li')
+                        li.innerHTML = movie.title 
+                        filmItem.append(li)
+                        console.log(li)
+                    })
+                        
+                        
+               }
 
 
 });
