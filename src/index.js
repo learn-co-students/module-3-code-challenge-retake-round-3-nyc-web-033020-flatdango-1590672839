@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filmsDiv = () => document.querySelector("#films")
     const posterDiv = () => document.querySelector("#poster")
     const showingDiv = () => document.querySelector("#showing")
-    const remainingTickets = document.querySelector('#ticket-num')
+    const remainingTickets = document.querySelector('#ticket-num') //tickets sold
 
     fetch(url)
     .then(resp => resp.json())
@@ -29,21 +29,53 @@ document.addEventListener('DOMContentLoaded', () => {
         description.textContent = movie.description
         showtime.textContent = movie.showtime
         remainingTickets.textContent = parseInt(movie.capacity - movie.tickets_sold)
+        // console.log(remainingTickets)
+
+        document.addEventListener('click', event => {
+            if(event.target.className === 'ui orange button') {
+                // console.log(remainingTickets.textContent)
+                // let ticketsSold = parseInt(movie.tickets_sold++)
+                // let updatedTickets = parseInt(movie.capacity - movie.tickets_sold)
+
+
+                let ticketsSold = parseInt(movie.tickets_sold++)
+                remainingTickets.textContent = parseInt(movie.capacity - ticketsSold)
+                // let avaTickets = parseInt(movie.capacity - ticketsSold)
+                // remainingTickets.textContent = avaTickets
+                // console.log(remainingTickets)
+                fetch(url, {
+                    method: 'PATCH',
+                    headers: {
+                        'content-type': 'application/json',
+                        'accept': 'application/json'
+                    },
+                    body: JSON.stringify({'tickets_sold': ticketsSold})
+                })
+            }
+        })
     }
 
-    document.addEventListener('click', event => {
-        if(event.target.className === 'ui orange button') {
-            let updatedTickets = parseInt(remainingTickets.textContent--)
-            // console.log(remainingTickets.textContent)
+    // document.addEventListener('click', event => {
+    //     if(event.target.className === 'ui orange button') {
+    //         // let updatedTickets = parseInt(remainingTickets.textContent--)
 
-            fetch(url, {
-                method: 'PATCH',
-                headers: {
-                    'content-type': 'application/json',
-                    'accept': 'application/json'
-                },
-                body: JSON.stringify({'tickets_sold': updatedTickets})
-            })
-        }
-    })
+    //         // let ticketsSold = parseInt(remainingTickets.innerText++)
+    //         // let ticketsLeft = parseInt(30 - ticketsSold)
+    //         // remainingTickets.textContent = ticketsLeft
+    //         // console.log(ticketsSold)
+    //         // console.log(updatedTickets)
+    //         // console.log(remainingTickets)
+    //         // console.log(ticketsLeft) //tickets sold 
+    //         // console.log(remainingTickets.textContent)
+
+    //         fetch(url, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'content-type': 'application/json',
+    //                 'accept': 'application/json'
+    //             },
+    //             body: JSON.stringify({'tickets_sold': updatedTickets})
+    //         })
+    //     }
+    // })
 })
