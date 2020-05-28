@@ -44,9 +44,10 @@ const runTime = document.querySelector('#runtime')
 const moviePoster = document.querySelector('#poster')
 
 function renderMovie(movie){
-    // const p = document.createElement('p')
-    // p.textContent = movie.title
-    titleSection.append(movie.title)
+    const span = document.createElement('span')
+    span.textContent = movie.title
+    console.log(span)
+    titleSection.append(span)
 }
 
 fetch("http://localhost:3000/films/1")
