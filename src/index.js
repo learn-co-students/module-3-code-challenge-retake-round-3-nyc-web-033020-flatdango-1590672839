@@ -50,31 +50,31 @@ function renderMovie(movie){
     descriptionSection.textContent = movie.description
     titleSection.textContent = movie.title
     runTime.textContent = movie.runtime + 'min'
-    moviePoster.textContent = movie.poster
+    moviePoster.src = movie.poster
     showTime.textContent = movie.showtime
     availableTickets.textContent = parseInt(movie.capacity) - movie.tickets_sold
+    console.log(Number(movie.capacity))
 }
 
-button.addEventListener('click', e =>{
+function update(movie){
+
+    button.addEventListener('click', e =>{
     e.preventDefault()
-
-    fetch("http://localhost:3000/films/1", {
-        method: 'PATCH',
-        body: JSON.stringify(),
-        headers: {
-            "Content-Type": 'application/json'
-        }
-        .then(r => r.json())
-        .then( )
+    
+    if (Number(movie.capacity) > movie.tickets_sold){
+        Number(movie.capacity) - movie.tickets_sold
+        fetch("http://localhost:3000/films/1", {
+            method: 'PATCH',
+            body: JSON.stringify(),
+            headers: {
+                "Content-Type": 'application/json'
+            }
+            .then(r => r.json())
+        })
+    }
     })
-
-
-    // if (movie.capacity > Number(movie.tickets_sold)){
-    //     movie.capacity - Number(movie.tickets_sold)
-    // }
-
-})
+}
 
 fetch("http://localhost:3000/films/1")
     .then(response => response.json())
-    .then(renderMovie);
+    .then(renderMovie)
