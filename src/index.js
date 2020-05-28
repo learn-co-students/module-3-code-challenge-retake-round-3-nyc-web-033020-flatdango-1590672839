@@ -1,8 +1,11 @@
 const url = "http://localhost:3000/films"
+const headers = {
+    "content-type": "application/json",
+    Accept: "application/json" 
+}
 const filmsDiv = () => document.querySelector("#films")
 const posterDiv = () => document.querySelector("#poster")
 const showingDiv = () => document.querySelector("#showing") 
-const remainingTickets = film.capacity - film.tickets_sold 
 
 function getFilms() {
     fetch(url) 
@@ -11,20 +14,18 @@ function getFilms() {
 }
 
 function renderFilms(films) {
-    const list = document.getElementById("film-list") 
     filmsDiv.appendChild(list)  
     films.forEach( film => {
-        const li = document.createElement("li") 
-        li.className = "film-group-item" 
-        li.innerText = film.title 
-        li.id = film.id 
-        list.appendChild(li) 
+        let filmDiv = document.createElement("div") 
+        filmDiv.className = "film item" 
+        filmDiv.innerText = film.title 
+        filmDiv.id = film.id 
+        filmsDiv.appendChild(filmDiv)  
     })
 }
 
 function showFilm() {
-    const list = document.getElementById("film-list") 
-    list.addEventListener("click", e => {
+    filmsDiv.addEventListener("click", e => {
         const film_id = e.target.id 
         fetch(`${url}/${film_id}`) 
             .then(resp => resp.json()) 
@@ -35,7 +36,7 @@ function displayFilmInfo(film) {
     posterDiv.dataset.id = film.id 
     posterDiv.innerHTML = `<img id="poster" src= ${film.image}>` 
     showingDiv.dataset.id = film.id 
-    
+    let remainingTickets = film.capacity - film.tickets_sold 
     console.log(remainingTickets)
     showingDiv.innerHTML = `<div class="card">
     <div id="title" class="title">${film.title}</div>
@@ -52,3 +53,11 @@ function displayFilmInfo(film) {
     </div>
   </div>` 
 }
+
+showingDiv.addEventListener("click", e=> {
+    if (e.target.className === "ui orange button") {
+        const div = e.target.parentElement
+        const currentTicketsRemaining = parseInt(div.textContent) 
+        
+    }
+})
