@@ -36,7 +36,7 @@ card.append(div)
         div.innerHTML = movie.tickets_sold
 
         ticketNum.innerHTML = `${parseInt(movie.capacity)}` - `${movie.tickets_sold}`
-    
+  
     }
 
     // when you click on buy tickets , remaining tickest will decrease 
@@ -67,7 +67,13 @@ card.append(div)
                 })
 
                 if (x > y ){ 
+
+
                let  x = y 
+
+               ticketNum.innerHTML = `0 no more tickets` 
+
+               
 
 
                     fetch(`http://localhost:3000/films/1`, {
