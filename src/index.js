@@ -59,11 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const newArray = Array.from(buyTxBtnHTMLColl)
     const buyTxButton = newArray[0]
     buyTxButton.id = movie.id 
+    buyTxButton.dataset.id = movie.tickets_sold
   }
 
   //buy ticket for a single movie: add event listener to buy ticket btn
-  //when clicked, send PATCH request for num of tx sold
-  //num-of-tx-sold should increase by 1 and persist
+  //when clicked, send PATCH request to increase num of tx sold
+  //num-of-tx-sold should increase by 1 and persist to database
   //num of availTx should decrease on frontend
   const buyTxBtnHTMLColl = document.getElementsByClassName('ui orange button')
   const newArray = Array.from(buyTxBtnHTMLColl)
@@ -71,8 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   buyTxButton.addEventListener('click', (e) => {
     const id = e.target.id
-
-
+    let txSold = e.target.dataset.id
+    txSold = parseInt(txSold)
+    let increasedTxSold = txSold + 1
 
     fetch(`${url}/${id}`, {
         method: 'PATCH',
@@ -81,10 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            'tickets_sold': numSold
+            'tickets_sold': increasedTxSold
         })
     })
+        .then(resp => resp.json())
+        .then(movie => {
+            renderSingleMovie(movie)
+        })
   })
+
+  
 
 //   getMovies()
   getSingleMovie()
