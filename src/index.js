@@ -7,22 +7,40 @@ url = "http://localhost:3000/films"
 
 document.addEventListener('DOMContentLoaded', (events) => {
     filmsFetch()
+
 })
 
 function filmsFetch(){ 
     fetch(url)
     .then(res => res.json())
-    .then(films => getFilms(films))
+    .then(films => displayFilm(films))
+    }
+
+    function fetchPatch(ticketsSold){
+        fetch(`${url/$filmsList[0].id}`, {
+            method: 'PATCH', 
+            headers: {
+                'Content-Type': 'application/json', 
+                'Accept': "application/json"
+            },
+            body: JSON.stringify({tickets_sold: ticketsSold})
+        })
     }
     
 //I need to get the films from the json to the Dom 
-function filmPoster(films){
+function displayFilm(films){
     filmsList = films
     firstPoster()
+    insertFilm()
+}
+
+function firstPoster() {
+    const poster = document.getElementById('poster')
+    poster.src = filmsList[0].poster
 }
 
 //i need to get the film information to the dom 
-function filmInfo() {
+function insertFilm() {
     const title = document.getElementById("title")
     title.innerText = filmsList[0].title
 
@@ -36,8 +54,8 @@ function filmInfo() {
     showtime.innerText = filmsList[0].showtime
 
     const tickets = document.getElementById('ticket-num')
-    const remainingTickets = (filmsList[0].capacity - filmsList)
-
+    const remainingTickets = (filmsList[0].capacity - filmsList[0].tickets_sold)
+    tickets.innerText = `${parseInt(remainingTickets)}`
 }
 
 
