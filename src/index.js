@@ -9,10 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const filmsDiv = () => document.querySelector("#films")
     const posterDiv = () => document.querySelector("#poster")
     const showingDiv = () => document.querySelector("#showing")
-    const filmBody = document.getElementById("films")
-    // const imageDiv = document.querySelector("poster")
+    const filmBody = document.querySelector("#films")
+    const imageDiv = document.querySelector("#poster")
+    const infoDiv = document.querySelector("#film-info")
+    const showtimeDiv = document.querySelector("#showtime")
+    const ticketDiv = document.querySelector("#ticket-num")
 
 
+    let movieID = null
     const getFilms = () =>{
         fetch(url)
         .then(resp => resp.json())
@@ -36,18 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     filmBody.addEventListener('click', e => {
-        fetch(url)
-        .then(resp => resp.json)
-        .then(films => {films.forEach(film =>{
-            if (film.id === event.target.dataset.id) {
-            }
-
-        })})
-
-
-        console.log(event.target)
-        
+        displaymovie(e)
     })
+
+    function displaymovie(e){
+        fetch(url)
+        .then(resp => resp.json())
+        .then(films => {
+            films.forEach(film => {
+            // console.log(e.target.dataset.id)
+            if (film.id === e.target.dataset.id) {
+                imageDiv.src = film.poster
+                infoDiv.textContent = film.description
+                showtimeDiv.textContent = film.showtime
+                ticketDiv.textContent = film.capacity - film.tickets_sold
+                }
+            })
+        })
+    }
+
+        
 
     getFilms()
 
