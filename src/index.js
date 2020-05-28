@@ -19,10 +19,6 @@ const div = document.createElement('div')
 
 card.append(div)
 
-
-
-
-
     firstMovie()
     function firstMovie(){
         fetch(`http://localhost:3000/films/1`)
@@ -40,7 +36,7 @@ card.append(div)
         div.innerHTML = movie.tickets_sold
 
         ticketNum.innerHTML = `${parseInt(movie.capacity)}` - `${movie.tickets_sold}`
-
+    
     }
 
     // when you click on buy tickets , remaining tickest will decrease 
@@ -51,18 +47,49 @@ card.append(div)
            // for this reason x will get decrease because of minus thing 
             // div.innerHTML++
 
-           
+          
            fetch(`http://localhost:3000/films/1`)
            .then( r => r.json())
-           .then(firstMovie => soldTicket(firstMovie))
-
-           function soldTicket(firstMovie){
+           .then(firstMovie => {
                  let x =  firstMovie.tickets_sold
                  x++
-
-
-                 let y = firstMovie.capacity 
+                 let y = parseInt(firstMovie.capacity) 
                  ticketNum.innerHTML = y - x
+
+
+                fetch(`http://localhost:3000/films/1`, {
+                    method: "PATCH",
+                    headers:   {
+                        'Content-Type': 'application/json',
+                        'accept': 'application/json'
+                      },
+                      body: JSON.stringify({ tickets_sold: x }) 
+                })
+
+                if (x > y ){ 
+               let  x = y 
+
+
+                    fetch(`http://localhost:3000/films/1`, {
+                    method: "PATCH",
+                    headers:   {
+                        'Content-Type': 'application/json',
+                        'accept': 'application/json'
+                      },
+                      body: JSON.stringify({ tickets_sold: x }) 
+
+                })
+
+            }
+      
+
+
+
+           })
+
+          
+
+
                  
                  
 
@@ -77,7 +104,7 @@ card.append(div)
           
 
          
-        }
+        
     })
 
 
