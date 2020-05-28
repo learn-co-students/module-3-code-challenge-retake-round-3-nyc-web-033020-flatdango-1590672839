@@ -15,15 +15,11 @@
 
 // can't buy ticket if tickets === 0
 
-
-
 // const url = "http://localhost:3000/films"
-// const filmsDiv = () => document.querySelector("#films")
-// const posterDiv = () => document.querySelector("#poster")
-// const showingDiv = () => document.querySelector("#showing")
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
-
 
     function getFilms() {
         fetch('http://localhost:3000/films')
@@ -33,32 +29,31 @@ document.addEventListener('DOMContentLoaded', () => {
             })
     }
 
-    console.log(getFilms())
 
     function renderFilms() {
 
-        const filmList = document.getElementById('showing')
+        const filmsDiv = () => document.querySelector("#films")
+        const posterDiv = () => document.querySelector("#poster")
+        const showingDiv = () => document.querySelector("#showing")
 
-        filmList.innerHTML = " "
+        const card = document.getElementById("card")
 
-        //filmPoster.scr = `${film[0].poster}`
+        const filmDetails = card.innerHTML
 
-        //movies.forEach(movie => {
+        filmDetails.innerHTML = `
 
-            filmList.innerHTML += `
+        <div id="title" class="title">${movie.title}</div>
+        <div id="runtime" class="meta">${movie.runtime} minutes</div>
+        <div class="content">
+        <div class="description">
+        <div id="film-info">${movie.description}</div>
+        <span id="showtime" class="ui label">${movie.showtime}</span>
+        <span id="ticket-num">${movie.tickets_sold}</span> remaining tickets
+        </div>
+        </div>
+        `
 
-            <div id="title" class="title">${movie.title}</div>
-            <div id="runtime" class="meta">${movie.runtime} minutes</div>
-            <div class="content">
-            <div class="description">
-            <div id="film-info">${movie.description}</div>
-            <span id="showtime" class="ui label">${movie.showtime}</span>
-            <span id="ticket-num">${movie.tickets - sold}</span> remaining tickets
-            </div>
-            </div>
-            `
-        }
-    })
+    }
 
     function buyTickets() {
 
