@@ -4,34 +4,50 @@
 // to see the number of available tickets decreasing on the frontend.
 // - I should not be able to buy a ticket if the showing is sold out.
 
-const url = "http://localhost:3000/films"
-const filmsDiv = () => document.querySelector("#films")
-const posterDiv = () => document.querySelector("#poster")
-const showingDiv = () => document.querySelector("#showing")
+document.addEventListener('DOMContentLoaded', () => {
+    const url = "http://localhost:3000/films"
+    const filmsDiv = () => document.querySelector("#films")
+    const posterDiv = () => document.querySelector("#poster")
+    const showingDiv = () => document.querySelector("#showing")
+    const filmBody = document.getElementById("films")
+    // const imageDiv = document.querySelector("poster")
 
-document.addEventListener('DOMContentLoaded', () =>{
+
     const getFilms = () =>{
         fetch(url)
         .then(resp => resp.json())
         // .then(console.log)
         .then(renderMovies)
     }
-    const movieid = null 
     const renderMovies = movies => {
-        let filmBody = document.getElementById("films")
-        filmBody .innerHTML = ""
-        console.log(filmBody)
+        filmBody.innerHTML = ""
         movies.forEach(movie => {
-            filmBody.innerHTML += `
-            <td id="${movie.id}">
-            <td>Title: ${movie.title}</td>
-            <td>Runtime: ${movie.runtime}</td>
-            <td>Showtime: ${movie.showtime}</td>
-            <td>Available Tickets: ${movie.capacity-movie.tickets_sold}</td>
-            </td>`
-
+            const row = document.createElement('tr')
+            row.dataset.id = movie.id
+            row.innerHTML = `
+            <tr>
+            <tr>Title: ${movie.title}</tr>
+            <tr>Runtime: ${movie.runtime}</tr>
+            <tr>Showtime: ${movie.showtime}</tr>
+            <tr>Available Tickets: ${movie.capacity-movie.tickets_sold}</tr>
+            </tr>`
+            filmBody.append(row)
         })
     }
+
+    filmBody.addEventListener('click', e => {
+        fetch(url)
+        .then(resp => resp.json)
+        .then(films => {films.forEach(film =>{
+            if (film.id === event.target.dataset.id) {
+            }
+
+        })})
+
+
+        console.log(event.target)
+        
+    })
 
     getFilms()
 
