@@ -13,8 +13,7 @@ function getFilms() {
     .then(films => renderFilms(films))
 }
 
-function renderFilms(films) {
-    filmsDiv.appendChild(list)  
+function renderFilms(films) { 
     films.forEach( film => {
         let filmDiv = document.createElement("div") 
         filmDiv.className = "film item" 
@@ -34,8 +33,10 @@ function showFilm() {
 }
 function displayFilmInfo(film) {
     posterDiv.dataset.id = film.id 
-    posterDiv.innerHTML = `<img id="poster" src= ${film.image}>` 
+    film.id = 1
+    posterDiv.src = film.poster 
     showingDiv.dataset.id = film.id 
+    film.id = 1 
     let remainingTickets = film.capacity - film.tickets_sold 
     console.log(remainingTickets)
     showingDiv.innerHTML = `<div class="card">
@@ -58,6 +59,16 @@ showingDiv.addEventListener("click", e=> {
     if (e.target.className === "ui orange button") {
         const div = e.target.parentElement
         const currentTicketsRemaining = parseInt(div.textContent) 
-        
+        const newTicketsRemaining = currentTicketsRemaining - 1 
+        div.textContent = newTicketsRemaining 
+
+        const id = div.dataset.id 
+        fetch(`${url}/${id}`, {
+            method: "PATCH", 
+            headers: headers, 
+            body: JSON.stringify({ remainingTickets: newTicketsRemaining})
+        })
+        .then(resp => resp.json()) 
+        .then(console.log)
     }
 })
