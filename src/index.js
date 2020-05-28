@@ -3,21 +3,54 @@
 // const posterImg = () => document.querySelector("#poster")
 // const showingDiv = () => document.querySelector("#showing")
 
-
-
 const state = {
     tickets_sold: null,
     capacity: null,
-    remaining_tickets: null
-}
-function getFirstFilmData() {
-    fetch(`http://localhost:3000/films/1`)
-        .then(response => response.json())
-        .then(movie => { renderFilmPosterAndDivs(movie) }
-        )
+    remaining_tickets: null,
+    movieId: null
 }
 
-function renderFilmPosterAndDivs(movie) {
+function getAllMovieData() {
+    fetch(`http://localhost:3000/films`)
+        .then(response => response.json())
+        .then(movies => {
+            renderMovieTitleList(movies)
+        })
+}
+
+function renderMovieTitleList(movies) {
+    const MovieHolder = document.querySelector("#films")
+    MovieHolder.innerHTML = ""
+
+    movies.forEach(movie => {
+        MovieHolder.innerHTML += `<li class="movieitem" value="${movie.id}">${movie.title}</li>`
+    })
+}
+
+function changeMovie() {
+    document.addEventListener("click", function (event) {
+        if (event.target.className === "movieitem") {
+            state.movieId = event.target.value
+            fetch(`http://localhost:3000/films/${state.movieId}`)
+                .then(response => response.json())
+                .then(movie =>{
+                    renderMovies(movie)
+                })
+        }
+    })
+}
+
+
+// function getSingleMovieData() {
+//     fetch(`http://localhost:3000/films/1`)
+//         .then(response => response.json())
+//         .then(movie => { renderMovies(movie) }
+//         )
+// }
+
+
+
+function renderMovies(movie) {
     const posterImg = document.querySelector("#poster")
     posterImg.src = movie.poster
     state.tickets_sold = movie.tickets_sold
@@ -71,7 +104,7 @@ function clickBuyTicket() {
                 fetch(`http://localhost:3000/films/1`, options)
                     .then(response => response.json())
                     .then(movie => {
-                        renderFilmPosterAndDivs(movie)
+                        renderMovies(movie)
                     })
 
             }
@@ -80,9 +113,12 @@ function clickBuyTicket() {
     })
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    getFirstFilmData()
-    clickBuyTicket()
+document.addEventListener("DOMContentLoaded", function () {
+
+    getAllMovieData()
+    changeMovie()
+    // getSingleMovieData()
+    // clickBuyTicket()
 })
 
 
