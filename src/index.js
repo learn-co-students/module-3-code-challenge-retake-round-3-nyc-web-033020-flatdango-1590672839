@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const url = "http://localhost:3000/films/1"
-    const filmsDiv = () => document.querySelector("#films")
-    const posterDiv = () => document.querySelector("#poster")
-    const showingDiv = () => document.querySelector("#showing")
-
+    // const filmsDiv = () => document.querySelector("#films")
+    // const posterDiv = () => document.querySelector("#poster")
+    // const showingDiv = () => document.querySelector("#showing")
     fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -42,12 +41,5 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     })
 
-    ////
-
-    const allFilms = films => {
-        let filmDiv = document.querySelector('film item')
-        films.forEach(film => console.log(film))
-        
-        // filmDiv.innerText = 
-    }
+/////////
 })
