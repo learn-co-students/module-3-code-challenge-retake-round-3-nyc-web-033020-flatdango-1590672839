@@ -11,7 +11,7 @@ const tixLeft = document.querySelector('#ticket-num')
 const info = document.querySelector('#film-info')
 const buyTix = document.querySelector('.ui.orange.button')
 const singleFilm = "http://localhost:3000/films/1"
-//patch: /films/[:id]
+const patch = `http://localhost:3000/films/films`
 //get single movie: `http://localhost:3000/films/${id}`
 
 //send fetch to get movie's details
@@ -37,9 +37,21 @@ info.innerHTML = `${film.description}`
 }
 //add event listener to buy tickets
 buyTix.addEventListener('click', e => {
-
-
-
+let tixToInteger = parseInt(tixLeft.innerHTML)
+tixToInteger -= 1
+tixLeft.innerHTML = `${tixToInteger}`
+console.log(tixToInteger)
+    
+    
+    //patch request to persist tix sold
+    // fetch(`${patch}/${film.id}`, {
+    //     method: "PATCH",
+    //     headers: {
+    //         "accept": "application/json",
+    //         "content-type": "application/json"
+    //     },
+    //     body: JSON.stringify({ tickets_sold: ${}})
+    //     })
 
 })
 
@@ -48,7 +60,8 @@ buyTix.addEventListener('click', e => {
 
 document.addEventListener("DOMContentLoaded", () => {
 fetchSingleFilm()
-let tixtToInt = parseInt(tixLeft.innerHTML)
-    tixtToInt--
-tixLeft.innerHTML = `${tixtToInt}`
+
+
+
+//tixLeft.innerHTML = `${tixtToInt}`
 })
