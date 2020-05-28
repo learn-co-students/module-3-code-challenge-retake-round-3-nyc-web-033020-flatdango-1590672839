@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDiv = document.querySelector("#film-info")
     const showtimeDiv = document.querySelector("#showtime")
     const ticketDiv = document.querySelector("#ticket-num")
-    const buyBtn = document.querySelector("#ui orange button")
+    const runtimeDiv = document.querySelector("#runtime")
+    const titleDiv = document.querySelector("#title")
 
 
     let movieID = null
+    let currentTic = null
     const getFilms = () =>{
         fetch(url)
         .then(resp => resp.json())
@@ -53,8 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 imageDiv.src = film.poster
                 infoDiv.textContent = film.description
                 showtimeDiv.textContent = film.showtime
+                runtimeDiv.textContent = film.runtime
+                titleDiv.textContent = film.title
                 ticketDiv.textContent = film.capacity - film.tickets_sold
                 movieID = film.id
+                currentTic = film.tickets_sold
                 }
             })
             
@@ -63,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', e => {
         if (e.target.className === "ui orange button"){
+            console.log(btn)
+
+
             fetch(`${url}/${movieID}`, {
                 method: 'PATCH',
                 headers: {
@@ -70,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    tickets_sold: 
+                    tickets_sold: currentTic-1
                 })
                 
                 
