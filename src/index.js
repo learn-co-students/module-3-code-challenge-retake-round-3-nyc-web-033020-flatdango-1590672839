@@ -40,16 +40,6 @@ function changeMovie() {
     })
 }
 
-
-// function getSingleMovieData() {
-//     fetch(`http://localhost:3000/films/1`)
-//         .then(response => response.json())
-//         .then(movie => { renderMovies(movie) }
-//         )
-// }
-
-
-
 function renderMovies(movie) {
     const posterImg = document.querySelector("#poster")
     posterImg.src = movie.poster
@@ -88,6 +78,7 @@ function clickBuyTicket() {
             if (state.remaining_tickets <= 0) {
                 event.target.innerHTML = "Sold out"
             } else {
+                
                 const newTicketsSold = state.tickets_sold + 1
 
                 const options = {
@@ -101,7 +92,7 @@ function clickBuyTicket() {
                     })
                 }
 
-                fetch(`http://localhost:3000/films/1`, options)
+                fetch(`http://localhost:3000/films/${state.movieId}`, options)
                     .then(response => response.json())
                     .then(movie => {
                         renderMovies(movie)
@@ -118,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getAllMovieData()
     changeMovie()
     // getSingleMovieData()
-    // clickBuyTicket()
+    clickBuyTicket()
 })
 
 
