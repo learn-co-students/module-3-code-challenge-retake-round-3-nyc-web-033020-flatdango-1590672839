@@ -6,9 +6,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const url = "http://localhost:3000/films"
-    const filmsDiv = () => document.querySelector("#films")
-    const posterDiv = () => document.querySelector("#poster")
-    const showingDiv = () => document.querySelector("#showing")
     const filmBody = document.querySelector("#films")
     const imageDiv = document.querySelector("#poster")
     const infoDiv = document.querySelector("#film-info")
@@ -20,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let movieID = null
     let currentTic = null
+    let maxCap = null
+
     const getFilms = () =>{
         fetch(url)
         .then(resp => resp.json())
@@ -60,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ticketDiv.textContent = film.capacity - film.tickets_sold
                 movieID = film.id
                 currentTic = film.tickets_sold
+                maxCap = film.capacity
                 }
             })
             
@@ -67,23 +67,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', e => {
+        if (maxCap != currentTic) {
         if (e.target.className === "ui orange button"){
-            console.log(btn)
+            // const ticket_count = currentTic - 1
 
 
             fetch(`${url}/${movieID}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    tickets_sold: currentTic-1
-                })
-                
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tickets_sold: currentTic = currentTic + 1
+                    })
                 
             })
+            .then(() => {ticketDiv.textContent = maxCap - currentTic})
+
         }
+    }
     })
         
 
