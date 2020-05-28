@@ -13,6 +13,14 @@ const filmInfo = document.getElementById('film-info')
 const showTime = document.getElementById('showtime')
 const ticketNum = document.getElementById('ticket-num')
 const button = document.getElementsByClassName('ui orange button')[0]
+// const extraContent = document.getElementsByClassName('extra content')[0]
+const card = document.getElementsByClassName('card')[0]
+const div = document.createElement('div')
+
+card.append(div)
+
+
+
 
 
     firstMovie()
@@ -28,14 +36,57 @@ const button = document.getElementsByClassName('ui orange button')[0]
         runtimeFirst.innerHTML = `${movie.runtime} minutes`
         filmInfo.innerHTML = movie.description
         showTime.innerHTML = movie.showtime
+
+        div.innerHTML = movie.tickets_sold
+
         ticketNum.innerHTML = `${parseInt(movie.capacity)}` - `${movie.tickets_sold}`
+
     }
 
     // when you click on buy tickets , remaining tickest will decrease 
     document.addEventListener('click', function(event){
         if (event.target.className === 'ui orange button'){
+           // when user clicks on button 
+           // I wnat titckets sold get increase 
+           // for this reason x will get decrease because of minus thing 
+            // div.innerHTML++
+
            
+           fetch(`http://localhost:3000/films/1`)
+           .then( r => r.json())
+           .then(firstMovie => soldTicket(firstMovie))
+
+           function soldTicket(firstMovie){
+                 let x =  firstMovie.tickets_sold
+                 x++
+
+
+                 let y = firstMovie.capacity 
+                 ticketNum.innerHTML = y - x
+                 
+                 
+
+
+
+
+             
+        
+             
+              
+}
+          
+
+         
         }
     })
 
+
+
 });
+
+
+
+
+
+// const totalSold = document.getElementById('total-sold')
+// console.log(totalSold)
