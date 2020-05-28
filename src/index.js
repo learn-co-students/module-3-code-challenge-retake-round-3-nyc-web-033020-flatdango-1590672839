@@ -30,19 +30,29 @@ function getFilms() {
     })
 }
 
-function renderFilms(film) {
+function renderFilms(films) {
 
-    const filmID =
+
+
+    const filmID = films[0].id
     const filmPoster = document.getElementById('poster')
+    const filmTitle = document.getElementById('title')
+    const filmRuntime = document.getElementById('runtime')
+    const filmShowtime = document.getElementById('showtime')
+    const filmDescription = document.getElementById('film-info')
+    const availableTickets = document.getElementById('ticket-num')
 
-    "id": "1",
-    "title": "The Giant Gila Monster",
-    "runtime": "108",
-    "capacity": "30",
-    "showtime": "04:00PM",
-    "tickets_sold": 27,
-    "description":
-    filmPoster.scr = `${film.poster}`
+    filmPoster.scr = `${film[0].poster}`
+
+
+    // "id": "1",
+    // "title": "The Giant Gila Monster",
+    // "runtime": "108",
+    // "capacity": "30",
+    // "showtime": "04:00PM",
+    // "tickets_sold": 27,
+    // "description":
+
 
     // films.forEach(film => {
         // filmPoster.scr = `${film.poster}`
