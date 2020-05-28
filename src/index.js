@@ -19,57 +19,73 @@
 
 // const url = "http://localhost:3000/films"
 // const filmsDiv = () => document.querySelector("#films")
-const posterDiv = () => document.querySelector("#poster")
+// const posterDiv = () => document.querySelector("#poster")
 // const showingDiv = () => document.querySelector("#showing")
 
 document.addEventListener('DOMContentLoaded', () => {
 
 
-function getFilms() {
-    fetch('http://localhost:3000/films')
-    .then(response => response.json())
-    .then(movies => {
-        renderFilms(movies)
+    function getFilms() {
+        fetch('http://localhost:3000/films')
+            .then(response => response.json())
+            .then(movies => {
+                renderFilms(movies)
+            })
+    }
+
+    console.log(getFilms())
+
+    function renderFilms() {
+
+        const filmList = document.getElementById('showing')
+
+        filmList.innerHTML = " "
+
+        //filmPoster.scr = `${film[0].poster}`
+
+        //movies.forEach(movie => {
+
+            filmList.innerHTML += `
+
+            <div id="title" class="title">${movie.title}</div>
+            <div id="runtime" class="meta">${movie.runtime} minutes</div>
+            <div class="content">
+            <div class="description">
+            <div id="film-info">${movie.description}</div>
+            <span id="showtime" class="ui label">${movie.showtime}</span>
+            <span id="ticket-num">${movie.tickets - sold}</span> remaining tickets
+            </div>
+            </div>
+            `
+        }
     })
-}
+
+    function buyTickets() {
+
+        addEventListener("click", function (event) {
+            event.preventDefault()
+            if(event.target.className === "ui orange button") {
 
 
-function renderFilms() {
+                const ticketsSold = event.target
+                ticketsSold++
 
-    const filmList = document.getElementById('showing')
+                const options = {
+                    method: "PATCH",
+                    headers: {
+                        'content-type': 'application/json',
+                        'accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tickets_sold: ticketsSold.value
+                    })
+                }
 
-    filmList.innerHTML = ''
+                fetch(`http://localhost:3000/films/${id}`, options)
+                .then(response => response.json())
+                .then(getFilms)
 
-    filmPoster.scr = ${film[0].poster}
-
-    movies.forEach(movie => {
-
-        filmList.innerHTML += `
-
-        <div id="title" class="title">${movie.title}</div>
-        <div id="runtime" class="meta">${movie.runtime} minutes</div>
-        <div class="content">
-        <div class="description">
-        <div id="film-info">${movie.description}</div>
-        <span id="showtime" class="ui label">${movie.showtime}</span>
-        <span id="ticket-num">${movie.tickets-sold}</span> remaining tickets
-        </div>
-        </div>
-        `
-    })
-}
-
-function buyTickets() {
-
-    addEventListener("click", function(event) {
-        event.preventDefault()
-        if(event.target.className === "ui orange button")
-        film
-
-    })
-}
-
-
-
-
+            }
+        })
+    }
 })
