@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const posterDiv = () => document.querySelector("#poster")
     const showingDiv = () => document.querySelector("#showing")
 
+    const buyTxBtnHTMLColl = document.getElementsByClassName('ui orange button')
+    const newArray = Array.from(buyTxBtnHTMLColl)
+    let buyTxButton = newArray[0]
+    let availableTx = document.querySelector('#ticket-num')
+
+
     //oops...started advanced deliverables by mistake
     const filmItems = document.getElementsByClassName('film item') 
     const filmItmArray = Array.from(filmItems)
@@ -66,15 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
   //when clicked, send PATCH request to increase num of tx sold
   //num-of-tx-sold should increase by 1 and persist to database
   //num of availTx should decrease on frontend
-  const buyTxBtnHTMLColl = document.getElementsByClassName('ui orange button')
-  const newArray = Array.from(buyTxBtnHTMLColl)
-  const buyTxButton = newArray[0]
+
   
   buyTxButton.addEventListener('click', (e) => {
     const id = e.target.id
     let txSold = e.target.dataset.id
     txSold = parseInt(txSold)
     let increasedTxSold = txSold + 1
+    // txSold = increasedTxSold
 
     fetch(`${url}/${id}`, {
         method: 'PATCH',
@@ -90,9 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(movie => {
             renderSingleMovie(movie)
         })
+
+        if(availableTx.textContent === 0){
+            buyTxButton.removeEventListener('click', e, false)
+            buyTxButton.textContent = 'SOLD OUT'
+
+        }
+
   })
 
-  
+  //if tickets_sold reaches 0, change buyTxBtn to say sold out and remove event listener
 
 //   getMovies()
   getSingleMovie()
