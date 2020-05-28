@@ -11,19 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const movieList = filmItmArray[1]
 
   //fetch all movies and render them in div w/ class card below 2nd div film item
-  const getMovies = () => {
-      fetch(url)
-      .then(resp => resp.json())
-      .then(renderAllMovies)
-  }  
+//   const getMovies = () => {
+//       fetch(url)
+//       .then(resp => resp.json())
+//       .then(renderAllMovies)
+//   }  
 
   //render each movie in div class card below film item
   //grab 2nd div film item
-  const renderAllMovies = movies => {
-      movies.forEach(movie => {
+//   const renderAllMovies = movies => {
+//       movies.forEach(movie => {
         
-      })
-  }
+//       })
+//   }
 
   //fetch a single movie and render its 
   //poster, title, runtime, showtime, and available tickets
@@ -54,9 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
     //deliverables doesn't ask for description, but I added just in case
     const desc = document.querySelector('#film-info')
     desc.textContent = movie.description
+
+    const buyTxBtnHTMLColl = document.getElementsByClassName('ui orange button')
+    const newArray = Array.from(buyTxBtnHTMLColl)
+    const buyTxButton = newArray[0]
+    buyTxButton.id = movie.id 
   }
 
-  getMovies()
+  //buy ticket for a single movie: add event listener to buy ticket btn
+  //when clicked, send PATCH request for num of tx sold
+  //num-of-tx-sold should increase by 1 and persist
+  //num of availTx should decrease on frontend
+  const buyTxBtnHTMLColl = document.getElementsByClassName('ui orange button')
+  const newArray = Array.from(buyTxBtnHTMLColl)
+  const buyTxButton = newArray[0]
+  
+  buyTxButton.addEventListener('click', (e) => {
+    const id = e.target.id
+
+
+
+    fetch(`${url}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            'tickets_sold': numSold
+        })
+    })
+  })
+
+//   getMovies()
   getSingleMovie()
 })
 
