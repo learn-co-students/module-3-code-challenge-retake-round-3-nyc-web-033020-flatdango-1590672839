@@ -19,50 +19,57 @@
 
 // const url = "http://localhost:3000/films"
 // const filmsDiv = () => document.querySelector("#films")
-// const posterDiv = () => document.querySelector("#poster")
+const posterDiv = () => document.querySelector("#poster")
 // const showingDiv = () => document.querySelector("#showing")
+
+document.addEventListener('DOMContentLoaded', () => {
+
 
 function getFilms() {
     fetch('http://localhost:3000/films')
     .then(response => response.json())
-    .then(films => {
-        renderFilms(films)
+    .then(movies => {
+        renderFilms(movies)
     })
 }
 
-function renderFilms(films) {
 
+function renderFilms() {
 
+    const filmList = document.getElementById('showing')
 
-    const filmID = films[0].id
-    const filmPoster = document.getElementById('poster')
-    const filmTitle = document.getElementById('title')
-    const filmRuntime = document.getElementById('runtime')
-    const filmShowtime = document.getElementById('showtime')
-    const filmDescription = document.getElementById('film-info')
-    const availableTickets = document.getElementById('ticket-num')
+    filmList.innerHTML = ''
 
-    filmPoster.scr = `${film[0].poster}`
+    filmPoster.scr = ${film[0].poster}
 
+    movies.forEach(movie => {
 
-    // "id": "1",
-    // "title": "The Giant Gila Monster",
-    // "runtime": "108",
-    // "capacity": "30",
-    // "showtime": "04:00PM",
-    // "tickets_sold": 27,
-    // "description":
+        filmList.innerHTML += `
 
+        <div id="title" class="title">${movie.title}</div>
+        <div id="runtime" class="meta">${movie.runtime} minutes</div>
+        <div class="content">
+        <div class="description">
+        <div id="film-info">${movie.description}</div>
+        <span id="showtime" class="ui label">${movie.showtime}</span>
+        <span id="ticket-num">${movie.tickets-sold}</span> remaining tickets
+        </div>
+        </div>
+        `
+    })
+}
 
-    // films.forEach(film => {
-        // filmPoster.scr = `${film.poster}`
+function buyTickets() {
 
+    addEventListener("click", function(event) {
+        event.preventDefault()
+        if(event.target.className === "ui orange button")
+        film
 
+    })
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    getFilms()
-    renderFilms()
+
 
 })
