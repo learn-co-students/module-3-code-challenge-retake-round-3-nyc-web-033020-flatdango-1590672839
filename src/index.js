@@ -15,11 +15,21 @@ fetch(url)
     document.getElementById('ticket-num').innerText = parseInt(filmOne.capacity) - filmOne.tickets_sold
 
     const buyBtn = document.getElementById('buy-btn')
-
     buyBtn.addEventListener('click', event => {
-        if(filmOne.capacity != filmOne.ticket_sold) {
-            fetch()
+        if(filmOne.capacity != filmOne.tickets_sold) {
+            filmOne.tickets_sold += 1 
+            fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json; charset=UTF-8'
+                }
+                // body: JSON.stringify(filmOne)
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
         }
+
     })
 
 
