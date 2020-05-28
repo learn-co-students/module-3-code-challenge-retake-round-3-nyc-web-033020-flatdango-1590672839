@@ -2,6 +2,7 @@ const url = "http://localhost:3000/films"
 const filmsDiv = () => document.querySelector("#films")
 const posterDiv = () => document.querySelector("#poster")
 const showingDiv = () => document.querySelector("#showing") 
+const remainingTickets = film.capacity - film.tickets_sold 
 
 function getFilms() {
     fetch(url) 
@@ -15,21 +16,28 @@ function getFilm(id) {
         .then(json => displayFilmInfo(json))  
 } 
 
-function remainingTickets(id, capacity, tickets_sold) {
+function remainingTickets(id, remainingTickets) {
     fetch(url + id, {
         method: "PATCH", 
         headers: {
             "Content-Type": "application/json", 
             Accept: "application/json" 
         },
+        body: JSON.stringify({
+            remainingTickets: remainingTickets
+        })
     })
+} 
+
+function renderFilms(films) {
+    let li = document.createElement("li") 
 }
 
 function displayFilmInfo(film) {
     posterDiv.dataset.id = film.id 
     posterDiv.innerHTML = `<img id="poster" src= ${film.image}>` 
     showingDiv.dataset.id = film.id 
-    let remainingTickets = film.capacity - film.tickets_sold 
+    
     console.log(remainingTickets)
     showingDiv.innerHTML = `<div class="card">
     <div id="title" class="title">${film.title}</div>
