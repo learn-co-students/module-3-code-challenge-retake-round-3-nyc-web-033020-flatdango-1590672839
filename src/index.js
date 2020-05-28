@@ -1,8 +1,3 @@
-// const url = "http://localhost:3000/films"
-// const filmsDiv = () => document.querySelector("#films")
-// const posterImg = () => document.querySelector("#poster")
-// const showingDiv = () => document.querySelector("#showing")
-
 const state = {
     tickets_sold: null,
     capacity: null,
@@ -83,7 +78,6 @@ function clickBuyTicket() {
                 
 
                 console.log(movieItemList.children)
-                // document.getElementsByClassName("movieitem").state.movieId
             } else {
 
                 const newTicketsSold = state.tickets_sold + 1
@@ -112,10 +106,8 @@ function clickBuyTicket() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-
     getAllMovieData()
     changeMovie()
-    // getSingleMovieData()
     clickBuyTicket()
 })
 
