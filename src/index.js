@@ -2,43 +2,48 @@
 // %%% fetch films data
 
 // find films html elements on page
-// >>> poster
-// >>> title
-// >>> runtime
-// >>> showtime
-// >>> available tickets
+// > poster
+// > title
+// > runtime
+// > showtime
+// > available tickets
 
 // add json data to elements for each film
 
-// addEventListener on click to buy ticket
+// %%% addEventListener on click to buy ticket
 // >>> fetch POST, options, .then(getData) to update on frontend
 
 // can't buy ticket if tickets === 0
 
-// const url = "http://localhost:3000/films"
+// available tickets = capacity - tickets sold
+
+// const url = "http://localhost:3000/films/1"
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
 
     function getFilms() {
-        fetch('http://localhost:3000/films')
+        fetch('http://localhost:3000/films/1')
             .then(response => response.json())
             .then(movies => {
-                renderFilms(movies)
+                renderFilm(movies)
             })
     }
 
 
-    function renderFilms() {
+    function renderFilm() {
 
         const filmsDiv = () => document.querySelector("#films")
         const posterDiv = () => document.querySelector("#poster")
         const showingDiv = () => document.querySelector("#showing")
 
+
         const card = document.getElementById("card")
 
         const filmDetails = card.innerHTML
+
+        const movie = movies[0]
 
         filmDetails.innerHTML = `
 
@@ -52,35 +57,36 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         </div>
         `
-
     }
 
     function buyTickets() {
 
         addEventListener("click", function (event) {
             event.preventDefault()
-            if(event.target.className === "ui orange button") {
+            // if(availableTickets !== 0) {
+                if(event.target.className === "ui orange button") {
 
 
-                const ticketsSold = event.target
-                ticketsSold++
+                    const ticketsSold = event.target
+                    ticketsSold++
 
-                const options = {
-                    method: "PATCH",
-                    headers: {
-                        'content-type': 'application/json',
-                        'accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        tickets_sold: ticketsSold.value
-                    })
+                    const options = {
+                        method: "PATCH",
+                        headers: {
+                            'content-type': 'application/json',
+                            'accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            tickets_sold: ticketsSold.value
+                        })
+                    }
+
+                    fetch(`http://localhost:3000/films/${id}`, options)
+                    .then(response => response.json())
+                    .then(getFilms)
+
                 }
-
-                fetch(`http://localhost:3000/films/${id}`, options)
-                .then(response => response.json())
-                .then(getFilms)
-
-            }
+            //}
         })
     }
 })
