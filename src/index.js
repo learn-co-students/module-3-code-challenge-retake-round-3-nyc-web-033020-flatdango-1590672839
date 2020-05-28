@@ -26,42 +26,64 @@ const renderFilms = (film) => {
 const capacityToInt = parseInt(film.capacity)
 const ticketsSoldtoInt = parseInt(film.tickets_sold)
 let availableTix = capacityToInt - ticketsSoldtoInt
+let ticketsSoldAsInt = parseInt(film.tickets_sold)
+ticketsSoldAsInt++
+
+const ticketPatch = () => {
+    fetch(`${'http://localhost:3000/films/'}/${movieCard.id}`, {
+    method: "PATCH",
+    headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+    },
+    body: JSON.stringify({ tickets_sold: `${ticketsSoldAsInt}`})
+    })
+}
 //render movie card
+movieCard.id = `${film.id}`
 movieTitle.innerHTML = `${film.title}`
 moviePoster.src = `${film.poster}` //will come back to this
 runTime.innerHTML = `${film.runtime} minutes`
 showTime.innerHTML = `${film.showtime}`
 tixLeft.innerHTML = `${availableTix}`
 info.innerHTML = `${film.description}`
-//movie
-}
-//add event listener to buy tickets
+
 buyTix.addEventListener('click', e => {
-let tixToInteger = parseInt(tixLeft.innerHTML)
-tixToInteger -= 1
-tixLeft.innerHTML = `${tixToInteger}`
-console.log(tixToInteger)
+    let tixToInteger = parseInt(tixLeft.innerHTML)
+    tixToInteger -= 1
+    tixLeft.innerHTML = `${tixToInteger}`
+
+
+       // patch request to persist tix sold
+    ticketPatch()
+    })
+// let ticketsSoldAsInt = parseInt(film.tickets_sold)
+// ticketsSoldAsInt++
+}
     
-    
-    //patch request to persist tix sold
-    // fetch(`${patch}/${film.id}`, {
-    //     method: "PATCH",
-    //     headers: {
-    //         "accept": "application/json",
-    //         "content-type": "application/json"
-    //     },
-    //     body: JSON.stringify({ tickets_sold: ${}})
+//patch for tickets
+//     const ticketPatch = () => {
+//     fetch(`${patch}/${movieCard.id}`, {
+//     method: "PATCH",
+//     headers: {
+//         "accept": "application/json",
+//         "content-type": "application/json"
+//     },
+//     body: JSON.stringify({ tickets_sold: `${_ticketsSoldAsInt}`})
+//     })
+// }
+//ticket event listener
+    // buyTix.addEventListener('click', e => {
+    //     let tixToInteger = parseInt(tixLeft.innerHTML)
+    //     tixToInteger -= 1
+    //     tixLeft.innerHTML = `${tixToInteger}`
+
+
+    //        // patch request to persist tix sold
+    //     ticketPatch()
     //     })
 
-})
-
-//persist amount of available tickets after it is clicked
-
-
-document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", (e) => {
 fetchSingleFilm()
 
-
-
-//tixLeft.innerHTML = `${tixtToInt}`
 })
