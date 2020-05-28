@@ -24,6 +24,8 @@ function renderFilmPosterAndDivs(movie) {
 
     // state.remaining_tickets = state.capacity - state.tickets_sold
 
+    const remaining_tickets = state.capacity- state.tickets_sold
+
     const infoDiv = document.getElementById("showing")
 
     infoDiv.innerHTML = `<div class="card">
@@ -33,7 +35,7 @@ function renderFilmPosterAndDivs(movie) {
         <div class="description">
             <div id="film-info">${movie.description}</div>
             <span id="showtime" class="ui label">${movie.showtime}</span>
-            <span id="ticket-num">${state.remaining_tickets}</span> remaining tickets
+            <span id="ticket-num">${remaining_tickets}</span> remaining tickets
         </div>
     </div>
     <div class="extra content">
@@ -49,16 +51,7 @@ function clickBuyTicket() {
     document.addEventListener("click", function (event) {
         if (event.target.className === "ui orange button") {
             
-            // spanTicketsSold = document.getElementById("ticket-num")
-            
-            // spanTicketsSoldInteger = parseInt(spanTicketsSold.innerHTML, 10)
-            // spanTicketsSold
-            // console.log(spanTicketsSoldInteger)
-           
-            
-            // //tickets Available = Ticket capacity - TicketsSold + 1
             const newTicketsSold = state.tickets_sold + 1
-            // state.tickets_sold - 1
 
             const options = {
                 method: 'PATCH',
@@ -74,7 +67,7 @@ function clickBuyTicket() {
             fetch(`http://localhost:3000/films/1`, options)
             .then(response => response.json())
             .then(movie => {
-                renderFilmPosterAndDivs(movie)
+                 renderFilmPosterAndDivs(movie)
             })
         }
     })
