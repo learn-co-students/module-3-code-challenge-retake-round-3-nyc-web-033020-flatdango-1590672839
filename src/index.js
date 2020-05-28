@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDiv = document.querySelector("#film-info")
     const showtimeDiv = document.querySelector("#showtime")
     const ticketDiv = document.querySelector("#ticket-num")
+    const buyBtn = document.querySelector("#ui orange button")
 
 
     let movieID = null
@@ -32,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr>
             <tr>Title: ${movie.title}</tr>
             <tr>Runtime: ${movie.runtime}</tr>
-            <tr>Showtime: ${movie.showtime}</tr>
-            <tr>Available Tickets: ${movie.capacity-movie.tickets_sold}</tr>
             </tr>`
             filmBody.append(row)
         })
@@ -42,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filmBody.addEventListener('click', e => {
         displaymovie(e)
     })
+
 
     function displaymovie(e){
         fetch(url)
@@ -54,11 +54,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 infoDiv.textContent = film.description
                 showtimeDiv.textContent = film.showtime
                 ticketDiv.textContent = film.capacity - film.tickets_sold
+                movieID = film.id
                 }
             })
+            
         })
     }
 
+    document.addEventListener('click', e => {
+        if (e.target.className === "ui orange button"){
+            fetch(`${url}/${movieID}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    tickets_sold: 
+                })
+                
+                
+            })
+        }
+    })
         
 
     getFilms()
