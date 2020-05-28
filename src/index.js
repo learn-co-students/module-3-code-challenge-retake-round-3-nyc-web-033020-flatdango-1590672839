@@ -63,7 +63,7 @@ function renderMovies(movie) {
             </div>
         </div>
         <div class="extra content">
-            <div class="ui orange button">Buy Ticket</div>
+            <div class="ui orange button" id= ${state.movieId}>Buy Ticket</div>
         </div>
     </div>
     </div>
@@ -77,8 +77,15 @@ function clickBuyTicket() {
             event.preventDefault()
             if (state.remaining_tickets <= 0) {
                 event.target.innerHTML = "Sold out"
-            } else {
+                console.log(state.movieId)
+                const movieItemList = document.getElementsByClassName("movieitem")
                 
+                
+
+                console.log(movieItemList.children)
+                // document.getElementsByClassName("movieitem").state.movieId
+            } else {
+
                 const newTicketsSold = state.tickets_sold + 1
 
                 const options = {
