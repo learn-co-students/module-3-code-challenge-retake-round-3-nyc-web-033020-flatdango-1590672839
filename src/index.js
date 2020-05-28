@@ -7,6 +7,7 @@ url = "http://localhost:3000/films"
 
 document.addEventListener('DOMContentLoaded', (events) => {
     filmsFetch()
+    buyTicket()
 
 })
 
@@ -49,6 +50,7 @@ function insertFilm() {
 
     const descripton = document.getElementById("film-info")
     descripton.innerText = filmsList[0].descripton
+    console.log(descripton)
 
     const showtime = document.getElementById("showtime")
     showtime.innerText = filmsList[0].showtime
@@ -56,6 +58,20 @@ function insertFilm() {
     const tickets = document.getElementById('ticket-num')
     const remainingTickets = (filmsList[0].capacity - filmsList[0].tickets_sold)
     tickets.innerText = `${parseInt(remainingTickets)}`
+}
+
+function buyTicket() {
+    showCard = document.getElementById("showing")
+    showCard.addEventListener('click', (e)=> {
+        e.preventDefault()
+        const descripton = parseInt(showCard.querySelectorAll('span')[1].innerText)
+        if (descripton > 0) {
+            filmsList[0].tickets_sold = filmsList[0].tickets_sold +1
+            const newTicketSold = filmsList[0].tickets_sold
+            insertFilm()
+            fetchPatch(newTicketSold)
+        }
+    })
 }
 
 
