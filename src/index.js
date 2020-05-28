@@ -38,18 +38,27 @@ const showingDiv = () => document.querySelector("#showing")
 
 
 const titleSection = document.querySelector('#title')
-console.log(titleSection)
 const descriptionSection = document.querySelector('#film-info')
 const runTime = document.querySelector('#runtime')
 const moviePoster = document.querySelector('#poster')
+const showTime = document.querySelector('#showtime')
+const availableTickets = document.querySelector('#ticket-num')
+const button = document.querySelector('#button')
+console.log(button)
+
+button.addEventListener('submit', e =>{
+    
+})
 
 function renderMovie(movie){
-    const span = document.createElement('span')
-    span.textContent = movie.title
-    console.log(span)
-    titleSection.append(span)
+    descriptionSection.textContent = movie.description
+    titleSection.textContent = movie.title
+    runTime.textContent = movie.runtime + 'min'
+    moviePoster.textContent = movie.poster
+    showTime.textContent = movie.showtime
+    availableTickets.textContent = parseInt(movie.capacity) - movie.tickets_sold
 }
 
 fetch("http://localhost:3000/films/1")
     .then(response => response.json())
-    .then(movie => console.log(movie));
+    .then(renderMovie);
