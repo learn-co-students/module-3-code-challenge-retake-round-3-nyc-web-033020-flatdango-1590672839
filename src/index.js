@@ -4,7 +4,8 @@
 // const showingDiv = () => document.querySelector("#showing")
 
 
-state = {
+
+const state = {
     tickets_sold: null,
     capacity: null,
     remaining_tickets: null
