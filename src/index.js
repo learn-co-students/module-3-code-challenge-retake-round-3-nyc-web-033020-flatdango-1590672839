@@ -44,11 +44,7 @@ const moviePoster = document.querySelector('#poster')
 const showTime = document.querySelector('#showtime')
 const availableTickets = document.querySelector('#ticket-num')
 const button = document.querySelector('#button')
-console.log(button)
 
-button.addEventListener('submit', e =>{
-    
-})
 
 function renderMovie(movie){
     descriptionSection.textContent = movie.description
@@ -58,6 +54,26 @@ function renderMovie(movie){
     showTime.textContent = movie.showtime
     availableTickets.textContent = parseInt(movie.capacity) - movie.tickets_sold
 }
+
+button.addEventListener('click', e =>{
+    e.preventDefault()
+
+    fetch("http://localhost:3000/films/1", {
+        method: 'PATCH',
+        body: JSON.stringify(),
+        headers: {
+            "Content-Type": 'application/json'
+        }
+        .then(r => r.json())
+        .then( )
+    })
+
+
+    // if (movie.capacity > Number(movie.tickets_sold)){
+    //     movie.capacity - Number(movie.tickets_sold)
+    // }
+
+})
 
 fetch("http://localhost:3000/films/1")
     .then(response => response.json())
