@@ -70,10 +70,7 @@ card.append(div)
                 })
 
                 if (x > y ){ 
-
-
                let  x = y 
-
                ticketNum.innerHTML = `0 no more tickets` 
                     fetch(`http://localhost:3000/films/1`, {
                     method: "PATCH",
@@ -88,27 +85,19 @@ card.append(div)
                }  
      })
 
-       allMovies()
-
+             allMovies()
                function allMovies(){
                    fetch('http://localhost:3000/films')
                    .then(r => r.json())
                    .then(movies => getMovies(movies))
                }
-
                function getMovies(movies){
-
                     movies.forEach(movie=> {
                         const li = document.createElement('li')
                         li.innerHTML = movie.title 
                         filmItem.append(li)
-                        console.log(li)
-                    })
-                        
-                        
+                    })        
                }
-
-
 });
 
 
